@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errors } from 'celebrate';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 
 app.use(notFoundHandler);
 app.use(errors());
+app.use(errorHandler);
 
 await connectMongoDB();
 
