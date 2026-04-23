@@ -4,6 +4,7 @@ import pino from 'pino-http';
 import cors from 'cors';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
+import { connectMongoDB } from './db/connectMongoDB.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -30,6 +31,8 @@ app.use(
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello RR!' });
 });
+
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
