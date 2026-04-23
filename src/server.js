@@ -5,6 +5,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -28,9 +29,13 @@ app.use(
   }),
 );
 
+
+
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello RR!' });
 });
+
+app.use(notFoundHandler);
 
 await connectMongoDB();
 
