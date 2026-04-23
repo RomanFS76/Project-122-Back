@@ -6,6 +6,7 @@ import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { errors } from 'celebrate';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -22,20 +23,20 @@ app.use(
         colorize: true,
         translateTime: 'HH:MM:ss',
         ignore: 'pid,hostname',
-        messageFormat: '{req.method} {req.url} {res.statusCode} - {responseTime}ms',
+        messageFormat:
+          '{req.method} {req.url} {res.statusCode} - {responseTime}ms',
         hideObject: true,
       },
     },
   }),
 );
 
-
-
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello RR!' });
 });
 
 app.use(notFoundHandler);
+app.use(errors());
 
 await connectMongoDB();
 
