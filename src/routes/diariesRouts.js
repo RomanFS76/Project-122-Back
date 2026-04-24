@@ -1,13 +1,15 @@
-import {celebrate} from "celebrate";
-import {Router} from 'express';
-
+import { celebrate } from "celebrate";
+import { Router } from 'express';
+import { authenticate } from '../middleware/authenticate.js';
+import { diaryValidation, diaryIdValidation } from '../validations/diariesValidation.js';
+import { createDiary, getDiaries, getDiaryById, updateDiary, deleteDiary } from '../controllers/diariesController.js';
 
 export const diariesRoutes = Router();
 
-//diariesRoutes.use('/diaries', authenticate);
+diariesRoutes.use(authenticate);
 
-diariesRoutes.get('/diaries', celebrate(diarySchema), );
-diariesRoutes.get('/diaries/:diaryId', celebrate(diarySchema), );
-diariesRoutes.post('/diaries', celebrate(diarySchema), );
-diariesRoutes.patch('/diaries/:diaryId', celebrate(diarySchema), );
-diariesRoutes.delete('/diaries/:diaryId', celebrate(diarySchema), );
+diariesRoutes.get('/diaries', getDiaries);
+diariesRoutes.get('/diaries/:diaryId', celebrate(diaryIdValidation), getDiaryById);
+diariesRoutes.post('/diaries', celebrate(diaryValidation), createDiary);
+diariesRoutes.patch('/diaries/:diaryId', celebrate(diaryIdValidation), celebrate(diaryValidation), updateDiary);
+diariesRoutes.delete('/diaries/:diaryId', celebrate(diaryIdValidation), deleteDiary);

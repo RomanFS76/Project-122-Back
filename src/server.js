@@ -8,6 +8,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
+import { diariesRoutes } from './routes/diariesRouts.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use(logger);
+
+app.use('/api', diariesRoutes);
 
 // app.get('/', (req, res) => {
 //   res.status(200).json({ message: 'Hello RR!' });
