@@ -8,6 +8,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
+import weeksRoutes from './routes/weeksRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -17,9 +18,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(logger);
 
-// app.get('/', (req, res) => {
-//   res.status(200).json({ message: 'Hello RR!' });
-// });
+app.use(weeksRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());
