@@ -2,7 +2,8 @@ import { Schema,model } from 'mongoose';
 
 const weekSchema = new Schema({
   analogy: {
-    type: String | null,
+    type: String,
+    default: null,
   },
   weekNumber: {
     type: Number,

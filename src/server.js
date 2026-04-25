@@ -9,6 +9,7 @@ import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { logger } from './middleware/logger.js';
 import weeksRoutes from './routes/weeksRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -18,7 +19,8 @@ app.use(cors());
 app.use(cookieParser());
 app.use(logger);
 
-app.use(weeksRoutes);
+app.use('/api', weeksRoutes);
+app.use('/api', usersRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());
